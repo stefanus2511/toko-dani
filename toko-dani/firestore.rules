@@ -1,0 +1,12 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Baseline only: anonymous sign-in proves a Firebase session exists, not identity.
+    // Anyone who can load the public app can create an anonymous session. Restrict
+    // production access to trusted user UIDs or move writes to a trusted backend.
+    function hasSession() { return request.auth != null; }
+    match /{document=**} {
+      allow read, write: if hasSession();
+    }
+  }
+}

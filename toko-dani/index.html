@@ -1,0 +1,293 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"
+      name="viewport"
+    />
+    <meta content="mobile_tab" name="shell-type" />
+    <meta name="theme-color" content="#fbf9f5" />
+    <title>Toko Dani · Kasir & Manajemen Toko</title>
+
+    <!-- Google Fonts & Icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,400..700,0..1,-50..200"
+      rel="stylesheet"
+    />
+
+    <!-- Tailwind CSS & Mobile Optimized Configuration -->
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script>
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "green-badge-text": "#14532d",
+              "cash-chip-active": "#166534",
+              "error-container": "#ffdad6",
+              "surface-sand": "#f5f1e9",
+              secondary: "#ac3400",
+              "on-error": "#ffffff",
+              "tertiary-fixed": "#ffdbca",
+              "text-primary-ink": "#292524",
+              "on-tertiary-fixed": "#331200",
+              "surface-container-high": "#f0e6e0",
+              "border-warm": "#d6cec2",
+              error: "#ba1a1a",
+              "on-primary-fixed-variant": "#005323",
+              "on-surface": "#1f1b17",
+              "surface-cream": "#fbf9f5",
+              background: "#fbf9f5",
+              "text-muted-ink": "#57534e",
+              "tertiary-container": "#b45309",
+              primary: "#00652c",
+              "green-badge-bg": "#dcfce7",
+              "secondary-fixed-dim": "#ffb59d",
+              "on-secondary-container": "#5d1900",
+              "surface-container-warm": "#ede7dc",
+              surface: "#fbf9f5",
+              "surface-variant": "#eae1da",
+              "on-tertiary-container": "#fff1eb",
+              "on-tertiary-fixed-variant": "#763300",
+              "on-tertiary": "#ffffff",
+              "surface-container-low": "#f6f2ea",
+              "outline-variant": "#e5ded4",
+              "surface-container-lowest": "#ffffff",
+              "primary-fixed-dim": "#79db8d",
+              "on-error-container": "#93000a",
+              "surface-container": "#f2ece2",
+              "inverse-primary": "#79db8d",
+              "border-warm-subtle": "#e8e2d8",
+              "inverse-surface": "#342f2b",
+              "secondary-fixed": "#ffdbd0",
+              "danger-solid": "#dc2626",
+              "on-secondary-fixed": "#390c00",
+              "primary-container": "#15803d",
+              "on-background": "#1f1b17",
+              "surface-container-highest": "#eae1da",
+              "tertiary-fixed-dim": "#ffb68e",
+              "surface-dim": "#e2d8d2",
+              "green-fresh-vibrant": "#16a34a",
+              outline: "#8a8175",
+              "danger-soft-bg": "#fee2e2",
+              "on-primary-container": "#d3ffd5",
+              "primary-fixed": "#95f8a7",
+              "surface-tint": "#006d30",
+              "on-secondary": "#ffffff",
+              "on-primary-fixed": "#00210a",
+              "inverse-on-surface": "#f9efe8",
+              "on-surface-variant": "#696156",
+              tertiary: "#903f00",
+              "surface-bright": "#fbf9f5",
+              "on-primary": "#ffffff",
+              "secondary-container": "#fd6b36",
+              "on-secondary-fixed-variant": "#832600",
+            },
+            borderRadius: {
+              DEFAULT: "0.25rem",
+              lg: "0.5rem",
+              xl: "0.75rem",
+              "2xl": "1rem",
+              full: "9999px",
+            },
+            spacing: {
+              "margin-mobile": "0.875rem",
+              "space-xs": "0.375rem",
+              "space-sm": "0.625rem",
+              "space-md": "1rem",
+              "space-lg": "1.25rem",
+            },
+            fontFamily: {
+              sans: ["Plus Jakarta Sans", "sans-serif"],
+            },
+            fontSize: {
+              "display-price": [
+                "26px",
+                {
+                  lineHeight: "32px",
+                  letterSpacing: "-0.02em",
+                  fontWeight: "800",
+                },
+              ],
+              "headline-lg": [
+                "20px",
+                {
+                  lineHeight: "26px",
+                  letterSpacing: "-0.01em",
+                  fontWeight: "700",
+                },
+              ],
+              "title-lg": ["17px", { lineHeight: "23px", fontWeight: "700" }],
+              "title-md": ["15px", { lineHeight: "21px", fontWeight: "600" }],
+              "body-lg": ["15px", { lineHeight: "22px", fontWeight: "500" }],
+              "body-md": ["13.5px", { lineHeight: "19px", fontWeight: "400" }],
+              "label-lg": ["14px", { lineHeight: "20px", fontWeight: "700" }],
+              "label-md": ["13px", { lineHeight: "18px", fontWeight: "600" }],
+              "label-sm": ["11.5px", { lineHeight: "16px", fontWeight: "600" }],
+            },
+          },
+        },
+      };
+    </script>
+
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body
+    class="bg-surface text-on-surface flex flex-col min-h-screen antialiased select-none sm:select-auto font-sans text-body-md"
+  >
+    <!-- TOPBAR HEADER (Ukuran Pas & Proporsional Mobile: h-16) -->
+    <header
+      class="fixed top-0 w-full z-50 pt-safe bg-surface/92 backdrop-blur-xl border-b border-border-warm-subtle/80 shadow-[0_1px_6px_rgba(41,37,36,0.03)]"
+    >
+      <div class="h-16 px-margin-mobile flex items-center justify-between">
+        <div class="flex items-center gap-2.5 min-w-0">
+          <div
+            class="w-8 h-8 rounded-lg bg-primary text-on-primary flex items-center justify-center font-bold text-[14px] shadow-sm shrink-0"
+          >
+            TD
+          </div>
+          <div class="flex flex-col min-w-0">
+            <div class="flex items-center gap-1.5">
+              <span
+                class="font-bold text-[15px] text-on-surface truncate leading-tight"
+                id="top-store-name"
+                >Toko Dani</span
+              >
+              <span
+                class="px-1.5 py-0.5 rounded-full bg-primary-container text-on-primary font-semibold text-[10.5px] shrink-0 leading-none"
+                >Buka</span
+              >
+            </div>
+            <div
+              class="flex items-center gap-1.5 text-on-surface-variant text-[12px] leading-tight mt-0.5"
+            >
+              <span class="truncate" id="top-date-label">Memuat...</span>
+              <span class="text-outline/60">•</span>
+              <span class="font-bold text-primary truncate" id="top-page-title"
+                >Kasir</span
+              >
+            </div>
+          </div>
+        </div>
+        <div class="flex items-center gap-2 shrink-0">
+          <span
+            class="inline-block w-2.5 h-2.5 rounded-full bg-amber-500 transition-colors"
+            id="connection-dot"
+            title="Koneksi Firestore"
+          ></span>
+          <button
+            type="button"
+            class="w-8 h-8 rounded-full bg-primary flex items-center justify-center text-on-primary shadow-sm hover:opacity-90 active:scale-95 transition-transform"
+            onclick="window.bukaPengaturanToko()"
+            title="Pengaturan Toko"
+          >
+            <span class="material-symbols-outlined text-[17px]">settings</span>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- MAIN APP CONTAINER -->
+    <main
+      class="flex flex-col relative w-full pt-16 pb-24 bg-surface px-margin-mobile min-h-screen"
+      id="app"
+    >
+      <!-- Active Tab content is rendered here by app.js -->
+      <div
+        class="flex flex-col items-center justify-center py-20 text-text-muted-ink gap-2.5"
+      >
+        <span
+          class="material-symbols-outlined text-primary text-[36px] animate-spin"
+          >progress_activity</span
+        >
+        <p class="font-medium text-[13.5px]">Menyiapkan Toko Dani...</p>
+      </div>
+    </main>
+
+    <!-- BOTTOM NAVIGATION BAR (Proporsional & Nyaman Digunakan) -->
+    <nav
+      class="fixed bottom-0 w-full z-40 pb-safe bg-surface/94 backdrop-blur-xl border-t border-border-warm-subtle/80 shadow-[0_-2px_10px_rgba(41,37,36,0.03)]"
+      id="bottom-nav"
+    >
+      <div class="flex justify-around items-center h-16 px-1">
+        <a
+          class="nav-tab-item active flex flex-col items-center justify-center flex-1 py-1 cursor-pointer"
+          data-path="kasir"
+          onclick="window.pindahHalaman('kasir')"
+        >
+          <div class="nav-icon-box">
+            <span class="material-symbols-outlined text-[23px]"
+              >point_of_sale</span
+            >
+          </div>
+          <span class="nav-label">Kasir</span>
+        </a>
+        <a
+          class="nav-tab-item flex flex-col items-center justify-center flex-1 py-1 cursor-pointer"
+          data-path="tambah-barang"
+          onclick="window.pindahHalaman('tambah-barang')"
+        >
+          <div class="nav-icon-box">
+            <span class="material-symbols-outlined text-[23px]"
+              >add_circle</span
+            >
+          </div>
+          <span class="nav-label">Tambah</span>
+        </a>
+        <a
+          class="nav-tab-item flex flex-col items-center justify-center flex-1 py-1 cursor-pointer"
+          data-path="stok-barang"
+          onclick="window.pindahHalaman('stok-barang')"
+        >
+          <div class="nav-icon-box">
+            <span class="material-symbols-outlined text-[23px]"
+              >inventory_2</span
+            >
+          </div>
+          <span class="nav-label">Stok</span>
+        </a>
+        <a
+          class="nav-tab-item flex flex-col items-center justify-center flex-1 py-1 cursor-pointer"
+          data-path="keuangan"
+          onclick="window.pindahHalaman('keuangan')"
+        >
+          <div class="nav-icon-box">
+            <span class="material-symbols-outlined text-[23px]"
+              >account_balance_wallet</span
+            >
+          </div>
+          <span class="nav-label">Keuangan</span>
+        </a>
+      </div>
+    </nav>
+
+    <!-- MODALS CONTAINER -->
+    <div id="modal-root"></div>
+
+    <!-- TOAST NOTIFICATION -->
+    <div
+      class="fixed top-20 left-1/2 -translate-x-1/2 z-50 bg-inverse-surface text-inverse-on-surface px-4 py-2.5 rounded-full text-[13px] font-semibold shadow-xl flex items-center gap-2 pointer-events-none transition-all duration-300 opacity-0 -translate-y-2"
+      id="toast"
+    >
+      <span
+        class="material-symbols-outlined text-primary-fixed text-[20px]"
+        id="toast-icon"
+        >check_circle</span
+      >
+      <span id="toast-msg">Notifikasi Toko</span>
+    </div>
+
+    <!-- PRINT ROOT -->
+    <div id="print-root" class="hidden"></div>
+
+    <script type="module" src="app.js"></script>
+  </body>
+</html>

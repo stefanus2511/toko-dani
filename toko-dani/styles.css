@@ -1,0 +1,573 @@
+@layer base {
+  html,
+  body {
+    width: 100vw;
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+  }
+  body {
+    overscroll-behavior: none;
+    background-color: #fbf9f5;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  .pb-safe {
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+  .pt-safe {
+    padding-top: env(safe-area-inset-top, 0px);
+  }
+  main > :first-child {
+    margin-top: 0 !important;
+  }
+  main > :last-child {
+    margin-bottom: 0 !important;
+  }
+}
+
+/* ========================================================
+   GLOBAL CSS BORDER SYSTEM & FORM NORMALIZATION
+   (Menghapus seluruh border bawaan browser, digantikan border styling Toko Dani)
+   ======================================================== */
+*,
+*::before,
+*::after {
+  border-color: #e8e2d8; /* border-warm-subtle */
+  box-sizing: border-box;
+}
+
+/* Reset border tombol bawaan browser */
+button {
+  border: none;
+  background: transparent;
+  outline: none;
+}
+
+/* Standarisasi semua elemen form agar bebas dari border bawaan browser */
+input,
+select,
+textarea {
+  border: 1px solid #d6cec2 !important; /* border-warm */
+  border-radius: 0.5rem; /* rounded-lg */
+  outline: none !important;
+  font-family: inherit;
+  color: #1f1b17;
+}
+
+/* Kecualikan input transparan/borderless yang memang sengaja tanpa border */
+input.bg-transparent,
+.border-0,
+.border-none {
+  border: none !important;
+  border-width: 0 !important;
+  border-color: transparent !important;
+  background-color: transparent !important;
+}
+
+/* Hilangkan panah stepper default browser pada input type number */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+/* Penyesuaian ikon picker kalender agar selaras */
+input[type="date"]::-webkit-calendar-picker-indicator {
+  cursor: pointer;
+  opacity: 0.65;
+  transition: opacity 0.2s ease;
+}
+input[type="date"]::-webkit-calendar-picker-indicator:hover {
+  opacity: 1;
+}
+
+/* Reset garis horizontal agar selaras dengan tema hangat */
+hr {
+  border: none;
+  border-top: 1px solid #e8e2d8;
+  margin: 0.5rem 0;
+}
+
+/* Hide scrollbars while preserving scrolling */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Material Symbols fill variant utility */
+.material-symbols-outlined.fill-1 {
+  font-variation-settings: "FILL" 1;
+}
+
+/* Scanner Video Preview */
+.scanner-video-preview {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+  border-radius: 12px;
+  background: #1f1b17;
+}
+
+/* ========================================================
+   JIGGLY CASCADE & SMOOTH HOVER ANIMATIONS
+   (Tetap jigly/elastis kenyal membal, muncul bergiliran dari atas ke bawah,
+    hover HANYA NAIK SAJA tanpa rotasi/miring)
+   ======================================================== */
+
+:root {
+  --smooth-curve: cubic-bezier(0.16, 1, 0.3, 1);
+  --smooth-bounce: cubic-bezier(0.25, 1.4, 0.45, 1);
+  --jiggle-curve: cubic-bezier(0.2, 0.9, 0.35, 1);
+}
+
+/* 1. Global Interactive Elements (Buttons, Links, Cards) */
+button,
+a,
+input[type="button"],
+input[type="submit"],
+[role="button"],
+.stock-item,
+.product-card,
+.trans-item {
+  transition:
+    transform 0.22s var(--smooth-bounce),
+    box-shadow 0.22s var(--smooth-curve),
+    background-color 0.2s ease !important;
+  will-change: transform;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Hover: HANYA NAIK SAJA (Tidak ada rotasi sama sekali) */
+@media (hover: hover) {
+  button:hover,
+  .stock-item:hover,
+  .product-card:hover,
+  .trans-item:hover,
+  [role="button"]:hover {
+    transform: translateY(-2.5px) !important;
+  }
+}
+
+/* Click / Tap Active: Tekan membal kenyal (jelly squish) tanpa rotasi miring */
+button:active,
+a:active,
+[role="button"]:active,
+.stock-item:active,
+.product-card:active,
+.trans-item:active {
+  transform: scale(0.94, 0.94) translateY(1.5px) !important;
+  transition: transform 0.08s var(--jiggle-curve) !important;
+}
+
+/* 2. Animasi JIGGLY CASCADE (Muncul bergantian satu per satu dari atas ke bawah secara jigly/kenyal membal) */
+@keyframes jigglyCascadeDown {
+  0% {
+    opacity: 0;
+    transform: translateY(-28px) scale(0.92, 1.08); /* Meluncur turun dari atas, agak lonjong */
+  }
+  44% {
+    opacity: 1;
+    transform: translateY(6px) scale(1.05, 0.95); /* Menghujam bawah, membal melebar kenyal (squash) */
+  }
+  68% {
+    transform: translateY(-3.5px) scale(0.98, 1.02); /* Pantulan balik ke atas (rebound) */
+  }
+  85% {
+    transform: translateY(1.5px) scale(1.01, 0.99); /* Osilasi mini terakhir */
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1, 1); /* Tenang sempurna */
+  }
+}
+
+/* Elemen halaman utama muncul bergiliran dari atas ke bawah */
+main > div > * {
+  animation: jigglyCascadeDown 0.44s var(--jiggle-curve) backwards;
+  will-change: transform, opacity;
+}
+
+/* Hindari form wrapper menganimasikan seluruh isinya sekaligus di halaman Tambah */
+main > div > form#add-product-form {
+  animation: none !important;
+}
+
+/* Kartu-kartu di dalam form Tambah Barang muncul berurutan dari atas ke bawah */
+#add-product-form > * {
+  animation: jigglyCascadeDown 0.44s var(--jiggle-curve) backwards;
+  will-change: transform, opacity;
+}
+
+/* Stagger delay cepat beruntun satu per satu dari atas ke bawah */
+main > div > *:nth-child(1) {
+  animation-delay: 0.02s;
+}
+main > div > *:nth-child(2) {
+  animation-delay: 0.06s;
+}
+main > div > *:nth-child(3) {
+  animation-delay: 0.1s;
+}
+main > div > *:nth-child(4) {
+  animation-delay: 0.14s;
+}
+main > div > *:nth-child(5) {
+  animation-delay: 0.18s;
+}
+main > div > *:nth-child(6) {
+  animation-delay: 0.22s;
+}
+main > div > *:nth-child(7) {
+  animation-delay: 0.26s;
+}
+main > div > *:nth-child(8) {
+  animation-delay: 0.3s;
+}
+main > div > *:nth-child(9) {
+  animation-delay: 0.34s;
+}
+main > div > *:nth-child(10) {
+  animation-delay: 0.38s;
+}
+main > div > *:nth-child(11) {
+  animation-delay: 0.42s;
+}
+main > div > *:nth-child(12) {
+  animation-delay: 0.46s;
+}
+
+/* Stagger berurutan satu per satu untuk setiap kartu di halaman Tambah Barang */
+#add-product-form > *:nth-child(1) {
+  animation-delay: 0.06s;
+} /* Nama Barang */
+#add-product-form > *:nth-child(2) {
+  animation-delay: 0.1s;
+} /* Kode / Barcode */
+#add-product-form > *:nth-child(3) {
+  animation-delay: 0.14s;
+} /* Kategori */
+#add-product-form > *:nth-child(4) {
+  animation-delay: 0.18s;
+} /* Harga & Estimasi Laba */
+#add-product-form > *:nth-child(5) {
+  animation-delay: 0.22s;
+} /* Stok Awal & Peringatan */
+#add-product-form > *:nth-child(6) {
+  animation-delay: 0.26s;
+} /* Tombol Simpan */
+
+/* Item di dalam daftar (Stok, Transaksi, Produk) juga ikut bergiliran jigly */
+.stock-item,
+.trans-item,
+.product-card {
+  animation: jigglyCascadeDown 0.42s var(--jiggle-curve) backwards;
+  will-change: transform, opacity;
+}
+
+.stock-item:nth-child(1),
+.trans-item:nth-child(1),
+.product-card:nth-child(1) {
+  animation-delay: 0.08s;
+}
+.stock-item:nth-child(2),
+.trans-item:nth-child(2),
+.product-card:nth-child(2) {
+  animation-delay: 0.12s;
+}
+.stock-item:nth-child(3),
+.trans-item:nth-child(3),
+.product-card:nth-child(3) {
+  animation-delay: 0.16s;
+}
+.stock-item:nth-child(4),
+.trans-item:nth-child(4),
+.product-card:nth-child(4) {
+  animation-delay: 0.2s;
+}
+.stock-item:nth-child(5),
+.trans-item:nth-child(5),
+.product-card:nth-child(5) {
+  animation-delay: 0.24s;
+}
+.stock-item:nth-child(6),
+.trans-item:nth-child(6),
+.product-card:nth-child(6) {
+  animation-delay: 0.28s;
+}
+.stock-item:nth-child(7),
+.trans-item:nth-child(7),
+.product-card:nth-child(7) {
+  animation-delay: 0.32s;
+}
+.stock-item:nth-child(8),
+.trans-item:nth-child(8),
+.product-card:nth-child(8) {
+  animation-delay: 0.36s;
+}
+
+/* 3. Modal Jiggly Pop-in (Dari bawah ke atas membal kenyal tanpa rotasi) */
+#modal-root > div > div {
+  animation: modalJigglyUp 0.42s var(--jiggle-curve) forwards;
+  will-change: transform, opacity;
+}
+
+@keyframes modalJigglyUp {
+  0% {
+    opacity: 0;
+    transform: translateY(45px) scale(0.92, 1.08);
+  }
+  48% {
+    opacity: 1;
+    transform: translateY(-6px) scale(1.04, 0.96);
+  }
+  72% {
+    transform: translateY(2.5px) scale(0.99, 1.01);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1, 1);
+  }
+}
+
+/* 4. Toast Notification Jiggly Slide Down (Tanpa rotasi) */
+#toast.opacity-100 {
+  animation: toastJigglyDown 0.42s var(--jiggle-curve) forwards;
+}
+
+@keyframes toastJigglyDown {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -28px) scale(0.9, 1.1);
+  }
+  48% {
+    opacity: 1;
+    transform: translate(-50%, 6px) scale(1.05, 0.95);
+  }
+  72% {
+    transform: translate(-50%, -2px) scale(0.98, 1.02);
+  }
+  100% {
+    opacity: 1;
+    transform: translate(-50%, 0) scale(1, 1);
+  }
+}
+
+/* 5. Inputs & Dropdowns Hover Jiggly & Focus (Membal kenyal tanpa rotasi) */
+input:not([type="checkbox"]):not([type="radio"]):not([type="hidden"]),
+select,
+textarea,
+.input-box-wrapper {
+  transition:
+    transform 0.22s var(--smooth-bounce),
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    background-color 0.2s ease !important;
+  will-change: transform;
+}
+
+@keyframes inputJigglyHover {
+  0% {
+    transform: translateY(0) scale(1, 1);
+  }
+  38% {
+    transform: translateY(-3px) scale(0.985, 1.025); /* naik lonjong sedikit */
+  }
+  65% {
+    transform: translateY(-1px) scale(1.02, 0.98); /* membal kenyal elastis */
+  }
+  85% {
+    transform: translateY(-2.3px) scale(0.995, 1.005); /* osilasi mini */
+  }
+  100% {
+    transform: translateY(-2px) scale(1, 1); /* tenang pada posisi naik -2px */
+  }
+}
+
+@media (hover: hover) {
+  input:not([type="checkbox"]):not([type="radio"]):not([type="hidden"]):not(
+      #pos-search-input
+    ):hover,
+  select:hover,
+  textarea:hover,
+  .input-box-wrapper:not(#pos-search-wrapper):hover {
+    animation: inputJigglyHover 0.35s var(--jiggle-curve) forwards !important;
+    border-color: #00652c !important;
+    box-shadow: 0 3px 10px rgba(0, 101, 44, 0.1) !important;
+  }
+}
+
+/* Hindari transformasi ganda untuk input di dalam wrapper */
+.input-box-wrapper input {
+  animation: none !important;
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+/* Khusus input pencarian nama barang kasir: BEBAS BORDER KOTAK */
+#pos-search-wrapper,
+#pos-search-wrapper:hover,
+#pos-search-wrapper:focus-within,
+#pos-search-input,
+#pos-search-input:hover,
+#pos-search-input:focus {
+  border: none !important;
+  border-width: 0 !important;
+  border-color: transparent !important;
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+/* Saat input aktif / fokus */
+input:not(#pos-search-input):focus,
+select:focus,
+textarea:focus,
+.input-box-wrapper:not(#pos-search-wrapper):focus-within {
+  transform: translateY(-2px) !important;
+  border-color: #00652c !important;
+  box-shadow: 0 4px 12px rgba(0, 101, 44, 0.14) !important;
+}
+
+#pos-search-wrapper:focus-within {
+  background-color: #fbf9f5 !important;
+  box-shadow: 0 2px 8px rgba(41, 37, 36, 0.04) !important;
+}
+
+/* ========================================================
+   BOTTOM NAVIGATION (Smooth, Elevasi Naik Saja Tanpa Rotasi)
+   ======================================================== */
+.nav-tab-item {
+  position: relative;
+  transition:
+    transform 0.2s var(--smooth-curve),
+    opacity 0.2s ease;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+}
+
+/* Tap physical feedback */
+.nav-tab-item:active {
+  transform: scale(0.92);
+}
+
+/* Nav Icon Pill Container */
+.nav-icon-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 28px;
+  border-radius: 9999px;
+  transition: all 0.28s var(--smooth-curve);
+  position: relative;
+  color: #696156;
+}
+
+/* Active State Pill: Naik halus tanpa rotasi */
+.nav-tab-item.active .nav-icon-box {
+  background-color: #dcfce7;
+  color: #00652c;
+  transform: translateY(-2px);
+  box-shadow: 0 3px 10px rgba(0, 101, 44, 0.12);
+}
+
+/* Active Icon Bounce Animation (Murni scale & translateY, tanpa rotasi) */
+.nav-tab-item.active .material-symbols-outlined {
+  font-variation-settings: "FILL" 1;
+  animation: navBounce 0.36s var(--smooth-bounce);
+}
+
+/* Inactive Hover: Hanya naik saja */
+.nav-tab-item:not(.active):hover .nav-icon-box {
+  background-color: rgba(237, 231, 220, 0.5);
+  color: #1f1b17;
+  transform: translateY(-2px);
+}
+
+/* Label styling & transition */
+.nav-label {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  margin-top: 1px;
+  transition: all 0.22s var(--smooth-curve);
+  color: #696156;
+}
+
+.nav-tab-item.active .nav-label {
+  color: #00652c;
+  font-weight: 800;
+  transform: scale(1.05);
+}
+
+/* Active Indicator Dot */
+.nav-tab-item::after {
+  content: "";
+  position: absolute;
+  bottom: 1px;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background-color: #00652c;
+  opacity: 0;
+  transform: scale(0);
+  transition: all 0.22s var(--smooth-curve);
+}
+
+.nav-tab-item.active::after {
+  opacity: 1;
+  transform: scale(1);
+}
+
+@keyframes navBounce {
+  0% {
+    transform: scale(0.85);
+  }
+  50% {
+    transform: scale(1.18) translateY(-2px);
+  }
+  75% {
+    transform: scale(0.96) translateY(-1px);
+  }
+  100% {
+    transform: scale(1) translateY(0);
+  }
+}
+
+/* Thermal Receipt Print Styles */
+@media print {
+  body * {
+    visibility: hidden;
+  }
+  #print-root,
+  #print-root * {
+    visibility: visible;
+  }
+  #print-root {
+    display: block !important;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    margin: 0;
+    padding: 10px;
+    font-family: monospace;
+    font-size: 12px;
+    color: black;
+    background: white;
+  }
+  .receipt-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  .receipt-table td,
+  .receipt-table th {
+    padding: 2px 0;
+  }
+}
